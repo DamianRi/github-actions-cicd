@@ -4,7 +4,17 @@ on: push
 jobs:
     deploy:
         runs-on: ubuntu-latest
+
+        # Ejemplo de servicio Redis
+        services:
+            redis:
+                image: redis
+                ports:
+                    - 6379
+
         steps:
+            - name: Test redis
+              run: redis-cli -h localhost -port 6379
             - name: Display repo variables
               run: |
                 echo "NAME: ${{ vars.NAME }}"
