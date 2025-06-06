@@ -5,6 +5,11 @@ jobs:
   build:
     runs-on: ubuntu-latest
 
+    strategy:
+      matrix:
+        os: [ubuntu-latest, windows-latest]
+        node: [18, 20]
+
     steps:
       - name: Display repo variables
         run: |
@@ -22,6 +27,7 @@ jobs:
       - name: Build page
         run: npm run build
       - name: Upload artifact
+        if: ${{ matrix.os == 'ubuntu-latest' && matrix.node == 18 }}
         uses: actions/upload-pages-artifact@v3 # or specific "vX.X.X" version tag for this action
         with:
           path: public/
@@ -47,7 +53,7 @@ jobs:
 
   notify:
     runs-on: ubuntu-latest
-    needs: build
+    needs: deploy
     if: always()
     steps:
       - name: Notify to slack
