@@ -17,7 +17,7 @@ jobs:
             - name: Install Redis tools
               run: sudo apt-get update -y && sudo apt-get install redis-tools -y
             - name: Test redis
-              run: redis-cli -h localhost -p 6379 ping
+              run: redis-cli && 127.0.0.1:6379 > ping
             - name: Display repo variables
               run: |
                 echo "NAME: ${{ vars.NAME }}"
