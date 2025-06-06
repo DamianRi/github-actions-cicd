@@ -6,6 +6,7 @@ jobs:
         runs-on: ubuntu-latest
 
         # Ejemplo de servicio Redis
+        # Esto descarga la imagen de docker para poder utilizar dentro del job
         services:
             redis:
                 image: redis
@@ -14,7 +15,7 @@ jobs:
 
         steps:
             - name: Install Redis tools
-              run: sudo apt install redis-tools -y
+              run: sudo apt-get update -y && sudo apt-get install redis-tools -y
             - name: Test redis
               run: redis-cli -h localhost -p 6379 ping
             - name: Display repo variables
