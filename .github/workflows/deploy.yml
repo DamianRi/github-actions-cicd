@@ -5,23 +5,15 @@ jobs:
     deploy:
         runs-on: ubuntu-latest
 
-        # Ejemplo de servicio Redis
-        # Esto descarga la imagen de docker para poder utilizar dentro del job
-        services:
-            redis:
-                image: redis
-                ports:
-                    - 6379
-
         steps:
-            - name: Install Redis tools
-              run: sudo apt-get update -y && sudo apt-get install redis-tools -y
-            - name: Test redis
-              run: redis-cli && 127.0.0.1:6379 > ping
             - name: Display repo variables
               run: |
                 echo "NAME: ${{ vars.NAME }}"
-            - name: Setup
+            - name: Checkout repo
+              uses: actions/checkout@v4
+            - name: Setup node
               uses: actions/setup-node@v4
               with:
                 node-version: 18
+            - name: Install dependencies
+              run: npm install
